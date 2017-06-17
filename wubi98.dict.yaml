@@ -1,0 +1,35 @@
+# Rime dictionary: wubi98
+# encoding: utf-8
+#
+# Original table author
+#   Yichun Zhang <agentzh@gmail.com>
+
+---
+name: wubi98
+version: "0.1"
+sort: by_weight
+columns:
+  - text
+  - code
+  - weight
+  - stem
+encoder:
+  exclude_patterns:
+    - '^z.*$'
+  rules:
+    - length_equal: 2
+      formula: "AaAbBaBb"
+    - length_equal: 3
+      formula: "AaBaCaCb"
+    - length_in_range: 4
+      formula: "AaBaCaZa"
+...
+
+# 码表须以制表符（\t）分隔。
+工 a 551000000
+式 aa  429000000
+工 aaa 551000000
+工 aaaa  551000000
+匿 aad 5940000
+# 在此省略五笔 98 的其他部分的码表，因为版权方面的限制……
+# 你可从已支持五笔 98 的输入法自行导出码表。

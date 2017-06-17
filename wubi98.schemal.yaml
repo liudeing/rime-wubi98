@@ -1,0 +1,120 @@
+# Rime dictionary: wubi98
+# encoding: utf-8
+#
+# Original table author
+#   Yichun Zhang <agentzh@gmail.com>
+
+---
+name: wubi98
+version: "0.1"
+sort: by_weight
+columns:
+  - text
+  - code
+  - weight
+  - stem
+encoder:
+  exclude_patterns:
+    - '^z.*$'
+  rules:
+    - length_equal: 2
+      formula: "AaAbBaBb"
+    - length_equal: 3
+      formula: "AaBaCaCb"
+    - length_in_range: 4
+      formula: "AaBaCaZa"
+...
+
+# 码表须以制表符（\t）分隔。
+工 a 551000000
+式 aa  429000000
+工 aaa 551000000
+工 aaaa  551000000
+匿 aad 5940000
+# 在此省略五笔 98 的其他部分的码表，因为版权方面的限制……
+# 你可从已支持五笔 98 的输入法自行导出码表。
+wubi98.schema.yaml
+# Rime schema settings
+# encoding: utf-8
+
+schema:
+  schema_id: wubi98
+  name: "五笔98"
+  version: "0.01"
+  author:
+    - 發明人 王永民先生
+  description: |
+    五筆字型 98 版
+    碼表源自 scim-table
+    敲 z 鍵進入拼音反查
+  dependencies:
+    - pinyin_simp
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: extended_charset
+    states: [ 常用, 增廣 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator
+
+speller:
+  delimiter: " ;'"
+  max_code_length: 4
+  auto_select: true
+
+translator:
+  dictionary: wubi98
+  enable_charset_filter: false
+  enable_sentence: false
+  enable_encoder: false
+  encode_commit_history: false
+  max_phrase_length: 4
+  disable_user_dict_for_patterns:
+    - "^z.*$"
+
+reverse_lookup:
+  dictionary: pinyin_simp
+  prefix: "z"
+  suffix: "'"
+  tips: 〔拼音〕
+  preedit_format:
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "^z[a-z]*'?$"
+ 
